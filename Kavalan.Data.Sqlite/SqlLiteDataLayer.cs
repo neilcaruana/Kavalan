@@ -31,7 +31,7 @@ namespace Kavalan.Data.Sqlite
             await connection.OpenAsync();
             return connection;
         }
-        public virtual SqliteCommand InjectCommandWithParameters(SqliteCommand command, string query, List<PropertyInfo> properties, object? entity)
+        protected SqliteCommand InjectCommandWithParameters(SqliteCommand command, string query, List<PropertyInfo> properties, object? entity)
         {
             if (entity == null)
                 throw new Exception("Entity cannot be null when updating DB");
@@ -42,7 +42,7 @@ namespace Kavalan.Data.Sqlite
             }
             return command;
         }
-        public virtual T MapSqliteReaderToEntity<T>(SqliteDataReader reader, List<PropertyInfo> props) where T : new()
+        protected T MapSqliteReaderToEntity<T>(SqliteDataReader reader, List<PropertyInfo> props) where T : new()
         {
             var entity = new T();
             foreach (var property in props)

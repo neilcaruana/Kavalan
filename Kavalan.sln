@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kavalan.Data.Sqlite", "Kavalan.Data.Sqlite\Kavalan.Data.Sqlite.csproj", "{FC7D17BC-B952-4F28-9A7A-277525B029C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kavalan.Data.Sqlite", "Kavalan.Data.Sqlite\Kavalan.Data.Sqlite.csproj", "{FC7D17BC-B952-4F28-9A7A-277525B029C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kavalan.Data.Sqlite.Repositories", "Kavalan.Data.Sqlite.Repositories\Kavalan.Data.Sqlite.Repositories.csproj", "{0D1ED0D3-8398-48E6-A683-935F44FEEBDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kavalan.Data.Sqlite.Repositories", "Kavalan.Data.Sqlite.Repositories\Kavalan.Data.Sqlite.Repositories.csproj", "{0D1ED0D3-8398-48E6-A683-935F44FEEBDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kavalan.Logging", "Kavalan.Logging\Kavalan.Logging.csproj", "{2A9D3044-E495-4F91-84AC-9C4CFA51BFF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kavalan.Logging", "Kavalan.Logging\Kavalan.Logging.csproj", "{2A9D3044-E495-4F91-84AC-9C4CFA51BFF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kavalan.Core", "Kavalan.Core\Kavalan.Core.csproj", "{E41460E5-FDAF-4895-B1EB-C77690A45DCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{2A9D3044-E495-4F91-84AC-9C4CFA51BFF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A9D3044-E495-4F91-84AC-9C4CFA51BFF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A9D3044-E495-4F91-84AC-9C4CFA51BFF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E41460E5-FDAF-4895-B1EB-C77690A45DCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E41460E5-FDAF-4895-B1EB-C77690A45DCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E41460E5-FDAF-4895-B1EB-C77690A45DCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E41460E5-FDAF-4895-B1EB-C77690A45DCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
