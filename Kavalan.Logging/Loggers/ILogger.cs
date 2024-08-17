@@ -1,5 +1,4 @@
-﻿namespace ReverseProxySever.Logging.Interfaces;
-
+﻿namespace Kavalan.Logging;
 public interface ILogger
 {
     Task LogInfoAsync(string message, string correlationId = "");

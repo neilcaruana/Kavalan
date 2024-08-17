@@ -1,8 +1,6 @@
-﻿using ReverseProxyServer.Logging;
-using ReverseProxySever.Logging.Interfaces;
-using System.Text;
+﻿using System.Text;
 
-namespace ReverseProxySever.Logging.Loggers;
+namespace Kavalan.Logging;
 public class FileLogger : BaseLogger, ILogger
 {
     private readonly string logFilePath = "";

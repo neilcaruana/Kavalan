@@ -1,9 +1,4 @@
-﻿using ReverseProxyServer.Core.Enums.ProxyEnums;
-using ReverseProxyServer.Core.Interfaces;
-using ReverseProxyServer.Data;
-using ReverseProxyServer.Logging;
-
-namespace ReverseProxySever.Logging.Loggers;
+﻿namespace Kavalan.Logging;
 public class ConsoleLogger(LogLevel logLevel, CancellationToken cancellationToken) : BaseLogger(logLevel, cancellationToken), ILogger
 {
     private static readonly SemaphoreSlim logSemaphore = new(1, 1);

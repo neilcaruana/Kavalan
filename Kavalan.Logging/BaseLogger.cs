@@ -1,8 +1,7 @@
 ﻿using System.Globalization;
 using System.Text;
 
-namespace ReverseProxyServer.Logging;
-
+namespace Kavalan.Logging;
 public enum LogLevel
 {
     Info = 0,
@@ -23,8 +22,8 @@ public class BaseLogger(LogLevel loggerLevel, CancellationToken cancellationToke
     {
         StringBuilder newHeaderEntry = new();
         newHeaderEntry.Append(datePrefix).Append(this.delimeter)
-                .Append(messageLoggerLevel.ToString()).Append(this.delimeter)
-                .Append(string.IsNullOrWhiteSpace(correlationId) ? "" : "[" + correlationId + "]" + this.delimeter);
+                      .Append(messageLoggerLevel.ToString()).Append(this.delimeter)
+                      .Append(string.IsNullOrWhiteSpace(correlationId) ? "" : "[" + correlationId + "]" + this.delimeter);
 
         return newHeaderEntry.ToString();
     }
