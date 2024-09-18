@@ -23,7 +23,7 @@ namespace Kavalan.Data.Sqlite
 
             using SqliteCommand command = connection.CreateCommand();
             command.CommandText = script;
-            command.ExecuteNonQuery();
+            int result = command.ExecuteNonQuery();
         }
         public async Task<SqliteConnection> GetOpenConnection()
         {
@@ -42,23 +42,25 @@ namespace Kavalan.Data.Sqlite
             }
             return command;
         }
-        protected T MapSqliteReaderToEntity<T>(SqliteDataReader reader, List<PropertyInfo> props) where T : new()
+        protected T MapSqliteReaderToEntity<T>(SqliteDataReader dataReader, List<PropertyInfo> properties) where T : new()
         {
             var entity = new T();
-            foreach (var property in props)
+            foreach (var property in properties)
             {
-                if (property.PropertyType == typeof(DateTime))
-                    property.SetValue(entity, Convert.ToDateTime(reader[property.Name]));
-                else if (property.PropertyType == typeof(DateTime?))
+                object databaseValue = dataReader[property.Name];
+                if (databaseValue != DBNull.Value) //Only set value if not null in DB
                 {
-                    object nullableDateTime = reader[property.Name];
-                    if (nullableDateTime != DBNull.Value)
-                        property.SetValue(entity, Convert.ToDateTime(nullableDateTime));
+                    //Handle special types that do not auto convert
+                    if (property.PropertyType == typeof(DateTime))
+                        property.SetValue(entity, Convert.ToDateTime(databaseValue));
+                    else if (property.PropertyType == typeof(DateTime?))
+                        property.SetValue(entity, Convert.ToDateTime(databaseValue));
+                    else if (property.PropertyType == typeof(Boolean))
+                        property.SetValue(entity, Convert.ToBoolean(databaseValue));
+                    else
+                        property.SetValue(entity, databaseValue); //Auto converted types
                 }
-                else if (!reader.IsDBNull(reader.GetOrdinal(property.Name)))
-                    property.SetValue(entity, reader[property.Name]);
             }
-
             return entity;
         }
     }
