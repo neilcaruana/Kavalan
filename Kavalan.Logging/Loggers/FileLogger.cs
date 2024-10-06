@@ -1,21 +1,34 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 
 namespace Kavalan.Logging;
 public class FileLogger : BaseLogger, ILogger
 {
-    private readonly string logFilePath = "";
+    private string _autoLogFilePath;
+    private string autoLogFilePath
+    {
+        get
+        {
+            if (string.IsNullOrWhiteSpace(_autoLogFilePath))
+            {
+                string fileName = Path.GetFileName(Environment.ProcessPath) ?? "EmptyExeName";
+                string logDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs");
+                return Path.Combine(logDirectory, $"{DateTime.Now:dd_MM_yyyy}_{fileName}.log");
+            }
+            else
+                return _autoLogFilePath;
+        }
+    }
     private static readonly SemaphoreSlim logSemaphore = new(1, 1);
 
     public FileLogger(LogLevel loggerLevel, string logFilePath = "", CancellationToken cancellationToken = default) : base(loggerLevel, cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(logFilePath))
-            this.logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs", "main.log");
-        else
-            this.logFilePath = logFilePath;
+        if (!string.IsNullOrWhiteSpace(logFilePath))
+            _autoLogFilePath = logFilePath;
 
-        string? directoryPath = Path.GetDirectoryName(this.logFilePath);
+        string? directoryPath = Path.GetDirectoryName(autoLogFilePath);
         if (!Directory.Exists(directoryPath))
-            Directory.CreateDirectory(directoryPath ?? throw new Exception($"Invalid path: {this.logFilePath}"));
+            Directory.CreateDirectory(directoryPath ?? throw new Exception($"Invalid path: {autoLogFilePath}"));
     }
     public Task LogInfoAsync(string message, string correlationId = "") => LogToFileAsync(message, LogLevel.Info, correlationId);
     public Task LogErrorAsync(string errorMessage, Exception? exception = null, string correlationId = "") =>
@@ -30,7 +43,7 @@ public class FileLogger : BaseLogger, ILogger
             try
             {
                 await logSemaphore.WaitAsync();
-                await File.AppendAllTextAsync(logFilePath, base.GetLogEntryHeader(messageLoggerLevel, correlationId) + " " + base.GetLogEntryMessage(entry) + Environment.NewLine, Encoding.UTF8);
+                await File.AppendAllTextAsync(autoLogFilePath, base.GetLogEntryHeader(messageLoggerLevel, correlationId) + " " + base.GetLogEntryMessage(entry) + Environment.NewLine, Encoding.UTF8);
             }
             catch (OperationCanceledException) { }
             catch (AggregateException ) { }
