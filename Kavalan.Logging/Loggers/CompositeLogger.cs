@@ -2,6 +2,12 @@
 public class CompositeLogger(IEnumerable<ILogger> loggers) : ILogger
 {
     private readonly IEnumerable<ILogger> loggers = loggers;
+    public LogLevel GetLogLevel() => loggers.First().GetLogLevel();
+    public void SetLogLevel(LogLevel level)
+    {
+        foreach (ILogger logger in loggers)
+            logger.SetLogLevel(level);  
+    }
 
     public async Task LogDebugAsync(string message, string correlationId = "")
     {
@@ -28,5 +34,4 @@ public class CompositeLogger(IEnumerable<ILogger> loggers) : ILogger
         IEnumerable<Task> logs = loggers.Select(logger => logger.LogWarningAsync(message, correlationId));
         await Task.WhenAll(logs);
     }
-
 }

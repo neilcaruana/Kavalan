@@ -20,6 +20,8 @@ public class FileLogger : BaseLogger, ILogger
         }
     }
     private static readonly SemaphoreSlim logSemaphore = new(1, 1);
+    public LogLevel GetLogLevel() => this.LoggerLevel;
+    public void SetLogLevel(LogLevel level) => this.LoggerLevel = level;
 
     public FileLogger(LogLevel loggerLevel, string logFilePath = "", CancellationToken cancellationToken = default) : base(loggerLevel, cancellationToken)
     {

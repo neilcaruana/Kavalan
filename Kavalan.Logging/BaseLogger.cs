@@ -4,11 +4,11 @@ using System.Text;
 namespace Kavalan.Logging;
 public enum LogLevel
 {
+    Error = -1,
     Info = 0,
-    Error = 1,
+    Warning = 1,
     Request = 2,
-    Warning = 3,
-    Debug = 4
+    Debug = 3
 }
 public class BaseLogger(LogLevel loggerLevel, CancellationToken cancellationToken = default)
 {

@@ -2,6 +2,9 @@
 public class ConsoleLogger(LogLevel logLevel, CancellationToken cancellationToken) : BaseLogger(logLevel, cancellationToken), ILogger
 {
     private static readonly SemaphoreSlim logSemaphore = new(1, 1);
+    public LogLevel GetLogLevel() => this.LoggerLevel;
+    public void SetLogLevel(LogLevel level) => this.LoggerLevel = level;
+
     public async Task LogInfoAsync(string message, string correlationId = "") => await ConsoleLog(message, LogLevel.Info, null, correlationId);
     public async Task LogErrorAsync(string errorMessage, Exception? exception = null, string correlationId = "") =>
         await ConsoleLog($"{errorMessage} {(exception != null ? $"{exception.GetType().Name} : {exception.GetBaseException().Message}" : "")}", LogLevel.Error, ConsoleColor.Red, correlationId);
