@@ -12,13 +12,13 @@ namespace Kavalan.Core
 
             return (result, stopwatch.ElapsedMilliseconds);
         }
-        public static async Task<long> TimeOnlyAsync(this Task task)
+        public static async Task<double> TimeOnlyAsync(this Task task)
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
             await task;
             stopwatch.Stop();
 
-            return stopwatch.ElapsedMilliseconds;
+            return stopwatch.Elapsed.TotalMilliseconds;
         }
     }
 }

@@ -1,9 +1,6 @@
-﻿using Kavalan.Data.Sqlite;
+﻿using Kavalan.Data.Sqlite.Metadata;
 using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Collections.Generic;
 using System.Reflection;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Kavalan.Data.Sqlite.Repositories
 {
@@ -198,8 +195,13 @@ namespace Kavalan.Data.Sqlite.Repositories
 
         public async void Dispose()
         {
-            if (externalTransaction != null) await externalTransaction.RollbackAsync();
-            if (externalConnection != null) await  externalConnection.CloseAsync();
+            if (externalTransaction != null)
+                using (externalTransaction)
+                    await externalTransaction.RollbackAsync();
+
+            if (externalConnection != null)
+                using (externalConnection)
+                    await  externalConnection.CloseAsync();
         }
     }
 }
