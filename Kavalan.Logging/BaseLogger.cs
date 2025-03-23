@@ -5,8 +5,8 @@ namespace Kavalan.Logging;
 public enum LogLevel
 {
     Error = -1,
-    Info = 0,
-    Warning = 1,
+    Warning = 0,
+    Info = 1,
     Request = 2,
     Debug = 3
 }
