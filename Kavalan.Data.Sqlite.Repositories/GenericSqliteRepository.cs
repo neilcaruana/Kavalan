@@ -18,21 +18,22 @@ namespace Kavalan.Data.Sqlite.Repositories
         public async Task<T?> SelectByPrimaryKeyAsync(object[] primaryKeyValues)
         {
             if (primaryKeyValues == null || primaryKeyValues.Length == 0)
-                throw new Exception("Primary key value(s) must be provided");
+                throw new ArgumentException("Primary key value(s) must be provided");
 
             TableMetaData meta = MetadataCache.GetTableMetadata<T>();
             List<T> data = await getListDataByFieldAsync(meta.PrimaryKeyColumns.Select(column => column.Name).ToList(), primaryKeyValues);
             return data.FirstOrDefault();
         }
+
         public async Task<T?> SelectByFieldValueAsync(string fieldName, object fieldValue)
         {
             if (string.IsNullOrWhiteSpace(fieldName))
-                throw new Exception("Field name must be specified");
+                throw new ArgumentException("Field name must be specified");
 
             if (fieldValue == null)
                 throw new Exception("Field value must be specified");
 
-            List<T> data = await getListDataByFieldAsync([fieldName], [fieldValue]);
+            List<T> data = await getListDataByFieldAsync(new List<string> { fieldName }, new object[] { fieldValue });
             return data.FirstOrDefault();
         }
         public async Task<T?> SelectByExpressionAsync(string whereClause = "", string orderByCaluse = "", int limit = -1)
@@ -201,7 +202,7 @@ namespace Kavalan.Data.Sqlite.Repositories
 
             if (externalConnection != null)
                 using (externalConnection)
-                    await  externalConnection.CloseAsync();
+                    await externalConnection.CloseAsync();
         }
     }
 }
