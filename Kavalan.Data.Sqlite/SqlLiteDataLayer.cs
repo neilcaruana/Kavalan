@@ -53,8 +53,6 @@ namespace Kavalan.Data.Sqlite
                     //Handle special types that do not auto convert
                     if (property.PropertyType == typeof(DateTime))
                         property.SetValue(entity, Convert.ToDateTime(databaseValue));
-                    else if (property.PropertyType == typeof(DateTime?))
-                        property.SetValue(entity, Convert.ToDateTime(databaseValue));
                     else if (property.PropertyType == typeof(Boolean))
                         property.SetValue(entity, Convert.ToBoolean(databaseValue));
                     else
